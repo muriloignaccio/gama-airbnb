@@ -18,17 +18,21 @@ const getProperties = async (e) => {
   e.preventDefault();
 
   const propertiesData = await fetch("https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72");
-    const propertiesJson = await propertiesData.json();
-    
-    const locationsCount = document.createElement('p');
-    locationsCount.setAttribute('class', 'locations-info__count');
-    locationsCount.innerHTML = `Mais de ${propertiesJson.length - 1} acomodações`;
+  const propertiesJson = await propertiesData.json();
 
-    const locationsName = document.createElement('h2');
-    locationsName.setAttribute('class', 'locations-info__name');
-    locationsName.innerHTML = `Acomodações em ${input.value}`;
+  const cards = document.querySelectorAll('.card');
 
-    appendChildren(locationsInfoSection, locationsCount,locationsName);
+  if (cards.length === propertiesJson.length) return;
+  
+  const locationsCount = document.createElement('p');
+  locationsCount.setAttribute('class', 'locations-info__count');
+  locationsCount.innerHTML = `Mais de ${propertiesJson.length - 1} acomodações`;
+
+  const locationsName = document.createElement('h2');
+  locationsName.setAttribute('class', 'locations-info__name');
+  locationsName.innerHTML = `Acomodações em ${input.value}`;
+
+  appendChildren(locationsInfoSection, locationsCount,locationsName);
 
   propertiesJson.forEach(({photo: src, property_type, name, price }) => {
     const card = document.createElement('article');
